@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, MapPin, Mail, Code, Palette, ShoppingCart, Monitor } from 'lucide-react';
+import { Phone, MapPin, Mail, Code, Palette, ShoppingCart, Monitor, X } from 'lucide-react';
 
 function App() {
-  const [activeSection, setActiveSection] = useState<'home' | 'it-solutions' | 'skill-development'>('home');
+  const [activeSection, setActiveSection] = useState<'home' | 'it-solutions' | 'skill-development' | 'offers'>('home');
   const [isVisible, setIsVisible] = useState(false);
   const [contactVisible, setContactVisible] = useState(false);
+  const [showPosterModal, setShowPosterModal] = useState(true);
 
   useEffect(() => {
     setIsVisible(true);
@@ -212,15 +213,135 @@ function App() {
     </div>
   );
 
+  const renderOffers = () => (
+    <div className="min-h-screen py-20 px-4 animate-slide-in">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <button
+            onClick={() => setActiveSection('home')}
+            className="mb-8 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-300 shadow-lg"
+          >
+            ← Back to Home
+          </button>
+          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-indigo-800 bg-clip-text text-transparent mb-6">
+            Special Offers
+          </h2>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            Don't miss out on our exclusive deals and promotions
+          </p>
+        </div>
+
+        <div className="flex justify-center">
+          <div className="group relative bg-white rounded-3xl p-12 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 border border-gray-100 max-w-md w-full text-center animate-bounce-in">
+            <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:rotate-12 transition-transform duration-300">
+              <span className="text-3xl">🎉</span>
+            </div>
+            
+            <h3 className="text-3xl font-bold text-gray-800 mb-4 group-hover:text-red-600 transition-colors duration-300">
+              Exclusive Offer!
+            </h3>
+            
+            <p className="text-gray-600 leading-relaxed mb-8 text-lg">
+              Click here to discover amazing deals and special promotions just for you!
+            </p>
+            
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('View Offers Now button clicked - redirecting to: https://way2skills-vijayadas-bdbu.bolt.host');
+                const url = 'https://way2skills-vijayadas-bdbu.bolt.host';
+                try {
+                  window.open(url, '_blank', 'noopener,noreferrer');
+                } catch (error) {
+                  console.error('Failed to open URL:', error);
+                  // Fallback: try direct navigation
+                  window.location.href = url;
+                }
+              }}
+              className="w-full py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 hover:from-orange-600 hover:to-red-700 cursor-pointer"
+            >
+              View Offers Now!
+            </button>
+            
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+        </div>
+        
+        {/* Backup redirect button */}
+        <div className="text-center mt-8">
+          <p className="text-gray-600 mb-4">Having trouble with the button above?</p>
+          <a
+            href="https://way2skills-vijayadas-bdbu.bolt.host"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+          >
+            🔗 Direct Link to Offers
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+
+  const handlePosterClick = () => {
+    setShowPosterModal(false);
+    window.open('https://way2skills-vijayadas-bdbu.bolt.host', '_blank');
+  };
+
   return (
     <div className="font-['Poppins'] bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
+      {/* Poster Modal */}
+      {showPosterModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="relative bg-white rounded-3xl p-8 max-w-2xl w-full mx-auto shadow-2xl animate-fade-in">
+            <button
+              onClick={() => setShowPosterModal(false)}
+              className="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-300 group"
+            >
+              <X className="w-5 h-5 text-gray-600 group-hover:text-gray-800" />
+            </button>
+            
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-800 bg-clip-text text-transparent mb-4">
+                Welcome to Way2Skills!
+              </h2>
+              <p className="text-gray-600 text-lg">
+                Click on the poster below to explore our amazing opportunities
+              </p>
+            </div>
+            
+            <div className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer group" onClick={handlePosterClick}>
+              <img 
+                src="/src/poster.jpg" 
+                alt="Way2Skills Poster" 
+                className="w-full h-auto max-h-96 object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/90 backdrop-blur-sm px-6 py-3 rounded-full text-blue-600 font-semibold shadow-lg cursor-pointer hover:bg-white hover:scale-105 transition-all duration-300">
+                  Click to Explore!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-blue-100 transition-all duration-300">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-lg border-b border-blue-100 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-800 bg-clip-text text-transparent">
-              Way2Skills
-            </h1>
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/src/logo.png" 
+                alt="Way2Skills Logo" 
+                className="w-10 h-10 object-contain"
+              />
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-800 bg-clip-text text-transparent">
+                Way2Skills
+              </h1>
+            </div>
             <nav className="hidden md:flex space-x-8">
               <button
                 onClick={() => setActiveSection('home')}
@@ -246,6 +367,14 @@ function App() {
               >
                 Courses
               </button>
+              <button
+                onClick={() => setActiveSection('offers')}
+                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                  activeSection === 'offers' ? 'bg-orange-100 text-orange-600' : 'text-gray-600 hover:text-orange-600'
+                }`}
+              >
+                Offers 🎉
+              </button>
               <a
                 href="https://docs.google.com/forms/d/e/1FAIpQLSei_CH2aXgyrBdLUykt0XcKYm8kymphbNep5B1Flf9c5Qepzg/viewform?usp=header"
                 target="_blank"
@@ -264,6 +393,7 @@ function App() {
         {activeSection === 'home' && renderHome()}
         {activeSection === 'it-solutions' && renderITSolutions()}
         {activeSection === 'skill-development' && renderSkillDevelopment()}
+        {activeSection === 'offers' && renderOffers()}
       </main>
 
       {/* Contact Section */}
