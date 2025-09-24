@@ -313,7 +313,7 @@ function App() {
             
             <div className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer group" onClick={handlePosterClick}>
               <img 
-                src="poster.jpg" 
+                src="./poster.jpg" 
                 alt="Way2Skills Poster" 
                 className="w-full h-auto max-h-96 object-cover group-hover:scale-105 transition-transform duration-500"
               />
