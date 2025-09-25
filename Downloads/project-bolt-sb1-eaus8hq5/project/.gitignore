@@ -36,6 +36,14 @@ Thumbs.db
 # Misc
 coverage/
 
+# Allow images in public folder
+!public/*.png
+!public/*.jpg
+!public/*.jpeg
+!public/*.gif
+!public/*.svg
+!public/*.webp
+
 # Optional: Ignore lock files (uncomment if needed)
 # package-lock.json
 # yarn.lock
