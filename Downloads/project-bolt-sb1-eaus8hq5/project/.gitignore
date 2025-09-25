@@ -48,3 +48,8 @@ coverage/
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
+
+# Prevent tracking files/folders outside the project directory
+/../
+/../../
+/../../../
